@@ -16,10 +16,10 @@ fun main() {
     bot.setUpdatesListener { updates ->
         updates.forEach { u ->
             bot.startCommand(u)
-                    .helpCommand(u)
-                    .linesCommand(u)
-                    .lineStationsQuery(u)
-                    .backToLinesQuery(u)
+                .helpCommand(u)
+                .linesCommand(u)
+                .lineStationsQuery(u)
+                .backToLinesQuery(u)
         }
         CONFIRMED_UPDATES_ALL
     }
@@ -50,10 +50,10 @@ private fun TelegramBot.linesCommand(update: Update): TelegramBot {
 }
 
 private fun linesMarkup() = InlineKeyboardMarkup(
-        *NN_LINES
-                .map { (name, line) -> InlineKeyboardButton(line.fullName()).callbackData(name) }
-                .map { b -> arrayOf(b) }
-                .toTypedArray())
+    *NN_LINES
+        .map { (name, line) -> InlineKeyboardButton(line.fullName()).callbackData(name) }
+        .map { b -> arrayOf(b) }
+        .toTypedArray())
 
 private fun TelegramBot.backToLinesQuery(update: Update): TelegramBot {
     if (update.callbackQuery()?.data() == LINES_CALLBACK_DATA) {
@@ -75,9 +75,9 @@ private fun TelegramBot.lineStationsQuery(update: Update): TelegramBot {
 }
 
 private fun Line.stationsMarkup() =
-        InlineKeyboardMarkup(
-                *stations
-                        .map { s -> InlineKeyboardButton(s.name).callbackData(s.name) }
-                        .union(listOf(InlineKeyboardButton(BACK_TO_LINES_TEXT).callbackData(LINES_CALLBACK_DATA)))
-                        .map { b -> arrayOf(b) }
-                        .toTypedArray())
+    InlineKeyboardMarkup(
+        *stations
+            .map { s -> InlineKeyboardButton(s.name).callbackData(s.id()) }
+            .union(listOf(InlineKeyboardButton(BACK_TO_LINES_TEXT).callbackData(LINES_CALLBACK_DATA)))
+            .map { b -> arrayOf(b) }
+            .toTypedArray())

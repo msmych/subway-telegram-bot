@@ -6,4 +6,5 @@ data class Station(val name: String) {
 
     lateinit var line: Line
 
+    fun id() = "${line.id}|$name"
 }
